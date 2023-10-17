@@ -6,5 +6,6 @@ class Program
     {
         Console.WriteLine("Hello new world");
         Console.WriteLine("Hello 2");
+        Console.WriteLine("Hola Mundo");
     }
 }
