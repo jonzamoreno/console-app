@@ -7,6 +7,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        ILogger logger = new ConsoleLogger();
+
         try
         {
             const double TargetTemperature = 38.0;
@@ -17,8 +19,7 @@ class Program
                 // Read current measurement from sensor.
                 i2cSend(0x80, "0xFFFA");
                 double meas = double.Parse(i2cRead(0x80));
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"INFO: Measured {meas}. Saved on {lastMeasureIndex}");
+                logger.Info($"Measured {meas}. Saved on {lastMeasureIndex}");
 
                 // Save in historical values
                 measurements[lastMeasureIndex] = meas;
@@ -28,7 +29,7 @@ class Program
                 // Calculate average
                 var average = measurements.Average();
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"Info: Computed average: {average}");
+                logger.Info($"Computed average: {average}");
 
                 // Control loop
                 if(average < TargetTemperature)
@@ -43,14 +44,12 @@ class Program
         }
         catch(IOException e)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Communication error : {e}");
+            logger.Error($"Communication error : {e}");
             Environment.Exit(1);
         }
         catch (Exception e)
         { 
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"UNEXPECTED ERROR : {e}");
+            logger.Error($"UNEXPECTED ERROR : {e}");
             Environment.Exit(1);
         }
 
