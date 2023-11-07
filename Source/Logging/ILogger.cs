@@ -1,4 +1,4 @@
-namespace ConsoleApp;
+namespace ConsoleApp.Logging;
 
 public interface ILogger
 {
