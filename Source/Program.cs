@@ -11,17 +11,17 @@ class Program
     static void Main(string[] args)
     {
         ILogger logger = new ConsoleLogger();
+        II2C i2cDriver = new I2CDummy();
+        List<IService> services = new List<IService>();
+        services.Add(new FanControlSvc(logger, i2cDriver));
 
         try
         {
-            List<IService> services = new List<IService>();
-            services.Add(new FanControlSvc());
             foreach(var svc in services)
                 svc.Start();
 
             logger.Info("Press Q to quit..");
             while (Console.ReadKey().Key != ConsoleKey.Q) ;
-
 
             foreach (var svc in services)
                 svc.Stop();

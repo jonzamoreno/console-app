@@ -9,10 +9,10 @@ public class FanControlSvc : IService
     private II2C i2cDriver;
     ServiceState state;
 
-    public FanControlSvc()
+    public FanControlSvc(ILogger logger, II2C driver)
     {
-        this.i2cDriver = new I2CDummy();
-        this.logger = new ConsoleLogger();
+        this.i2cDriver = driver;
+        this.logger = logger;
     }
 
     public void Start()
