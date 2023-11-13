@@ -1,18 +1,25 @@
 using ConsoleApp.Logging;
 using ConsoleApp.Drivers.I2C;
+using Application.Devices.TemperatureSensor;
+using Application.Devices.Fan;
 
 namespace ConsoleApp.Services;
 
 public class FanControlSvc : IService
 {
-    private ILogger logger;
-    private II2C i2cDriver;
+    private readonly ILogger logger;
+    private readonly ITemperatureSensor sensor;
+    private readonly IFan fan;
+    private readonly uint refreshTime;
+
     ServiceState state;
 
-    public FanControlSvc(ILogger logger, II2C driver)
+    public FanControlSvc(uint refreshMillisecs, ILogger logger, ITemperatureSensor temperatureSensor, IFan fanControl)
     {
-        this.i2cDriver = driver;
+        this.sensor = temperatureSensor;
+        this.fan = fanControl;
         this.logger = logger;
+        this.refreshTime = refreshMillisecs;
     }
 
     public void Start()
@@ -28,8 +35,7 @@ public class FanControlSvc : IService
                 while (state == ServiceState.Ok)
                 {
                     // Read current measurement from sensor.
-                    i2cDriver.send(0x80, "0xFFFA");
-                    double meas = double.Parse(i2cDriver.read(0x80));
+                    double meas =this.sensor.GetTemperature();
                     logger.Info($"Measured {meas}. Saved on {lastMeasureIndex}");
 
                     // Save in historical values
@@ -43,13 +49,11 @@ public class FanControlSvc : IService
 
                     // Control loop
                     if (average < TargetTemperature)
-                        // Decrease FAN speed
-                        i2cDriver.send(0x81, "0x0B");
+                        this.fan.DecreaseSpeed();
                     else if (average > TargetTemperature)
-                        //Increase FAN speed
-                        i2cDriver.send(0x81, "0xA");
+                        this.fan.IncreasSpeed();
 
-                    Thread.Sleep(5000);
+                    Thread.Sleep((int)refreshTime);
                 }
                 state = ServiceState.Stop;
             }

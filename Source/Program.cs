@@ -1,8 +1,8 @@
-﻿using System.Reflection.Metadata;
-using System.Runtime;
-using ConsoleApp.Logging;
+﻿using ConsoleApp.Logging;
 using ConsoleApp.Drivers.I2C;
 using ConsoleApp.Services;
+using Application.Devices.TemperatureSensor;
+using Application.Devices.Fan;
 
 namespace ConsoleApp;
 
@@ -13,7 +13,9 @@ class Program
         ILogger logger = new ConsoleLogger();
         II2C i2cDriver = new I2CDummy();
         List<IService> services = new List<IService>();
-        services.Add(new FanControlSvc(logger, i2cDriver));
+        ITemperatureSensor sensor = new LD2233(i2cDriver, 0x80);
+        IFan fan = new Fan(0x81, i2cDriver);
+        services.Add(new FanControlSvc(5000, logger, sensor, fan));
 
         try
         {
