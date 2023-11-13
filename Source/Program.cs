@@ -10,6 +10,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        // Boostrap
         ILogger logger = new ConsoleLogger();
         II2C i2cDriver = new I2CDummy();
         List<IService> services = new List<IService>();
@@ -17,6 +18,7 @@ class Program
         IFan fan = new Fan(0x81, i2cDriver);
         services.Add(new FanControlSvc(5000, logger, sensor, fan));
 
+        // Run
         try
         {
             foreach(var svc in services)
@@ -25,6 +27,7 @@ class Program
             logger.Info("Press Q to quit..");
             while (Console.ReadKey().Key != ConsoleKey.Q) ;
 
+            // End
             foreach (var svc in services)
                 svc.Stop();
         }

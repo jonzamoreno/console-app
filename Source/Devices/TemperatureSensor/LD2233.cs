@@ -3,7 +3,7 @@
 
 namespace Application.Devices.TemperatureSensor
 {
-    internal class LD2233 : ITemperatureSensor
+    public class LD2233 : ITemperatureSensor
     {
         private readonly uint i2cAddress;
         private readonly II2C driver;

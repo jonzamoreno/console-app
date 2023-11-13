@@ -21,7 +21,7 @@ public class FanControlTests
     }
 
     [Test]
-    public void FanDecreasedInTemperatureBelowLimit()
+    public void FanDecreasedWhenTemperatureBelowLimit()
     {
         var loggerMock = new Mock<ILogger>();
         var temp = new Mock<ITemperatureSensor>();
@@ -32,5 +32,21 @@ public class FanControlTests
         sut.Start();
         temp.Verify();
         fan.Verify();
+        fan.Verify(v => v.IncreasSpeed(), Times.Never());
+    }
+
+    [Test]
+    public void FanIncreasedWhenTemperatureAboveLimit()
+    {
+        var loggerMock = new Mock<ILogger>();
+        var temp = new Mock<ITemperatureSensor>();
+        var fan = new Mock<IFan>();
+        temp.Setup(t => t.GetTemperature()).Returns(25.0).Verifiable();
+        fan.Setup(f => f.IncreasSpeed()).Verifiable();
+        FanControlSvc sut = new FanControlSvc(500, loggerMock.Object, temp.Object, fan.Object); Assert.Pass();
+        sut.Start();
+        temp.Verify();
+        fan.Verify();
+        fan.Verify(v => v.DecreaseSpeed(), Times.Never());
     }
 }
