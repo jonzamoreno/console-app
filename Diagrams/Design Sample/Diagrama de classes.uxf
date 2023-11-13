@@ -1,0 +1,25 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>330</x><y>340</y><w>210</w><h>70</h></coordinates><panel_attributes>BoardXXX
+-
+SetConfiguration(CwConfig) : void
+GetConfiguration() : CwConfig</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>600</x><y>350</y><w>140</w><h>60</h></coordinates><panel_attributes>CwConfig
+--
+amplitude : double
+frequency : double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>530</x><y>360</y><w>90</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
+current
+m2=1</panel_attributes><additional_attributes>70;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>330</x><y>240</y><w>210</w><h>60</h></coordinates><panel_attributes>/ICwGenerator/
+--
+SetConfiguration(CwConfig) : void
+GetConfiguration() : CwConfig</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>290</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>350</x><y>440</y><w>160</w><h>70</h></coordinates><panel_attributes>TCP Comms
+--
+send(data[]) : void
+receive() : data[]</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>400</y><w>70</w><h>60</h></coordinates><panel_attributes>lt=&lt;-
+current
+m2=1</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>150</x><y>240</y><w>130</w><h>70</h></coordinates><panel_attributes>CwApplication
+-
+start():void
+stop():void 
+config():void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>270</x><y>260</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>60;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>150</x><y>170</y><w>130</w><h>30</h></coordinates><panel_attributes>API</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>190</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>60</x><y>80</y><w>140</w><h>60</h></coordinates><panel_attributes>GUI
+--
+SetFreq(double): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>80</y><w>140</w><h>60</h></coordinates><panel_attributes>HTTP
+--
+SetFreq(double): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>120</x><y>130</y><w>90</w><h>60</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>70;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>130</y><w>80</w><h>60</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;40;60;10</additional_attributes></element></diagram>
