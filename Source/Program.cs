@@ -10,7 +10,9 @@ class Program
 {
     static void Main(string[] args)
     {
+
         // Boostrap
+        //@todo: Substitute this code for a container
         ILogger logger = new ConsoleLogger();
         II2C i2cDriver = new I2CDummy();
         List<IService> services = new List<IService>();
